@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet, Image, Pressable } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import {
   widthPercentageToDP as wp,
@@ -8,9 +8,14 @@ import {
 export default function Index() {
   return (
     <View style={Styles.bg}>
-      <View style={Styles.setting}>
+      <Pressable
+        style={({ pressed }) => [
+          Styles.setting,
+          { opacity: pressed ? 0.5 : 1 },
+        ]}
+      >
         <Ionicons name="settings" size={wp(14)} color="#E84855" />
-      </View>
+      </Pressable>
       <View style={{ alignSelf: "flex-start" }}>
         <Image
           style={Styles.cross}
@@ -25,6 +30,22 @@ export default function Index() {
       <View style={{ alignSelf: "flex-end" }}>
         <Image style={Styles.o} source={require("../assets/images/o.png")} />
       </View>
+      <Pressable
+        style={({ pressed }) => [
+          Styles.menuitem,
+          { opacity: pressed ? 0.5 : 1 },
+        ]}
+      >
+        <Text style={Styles.menutext}>1 Player</Text>
+      </Pressable>
+      <Pressable
+        style={({ pressed }) => [
+          Styles.menuitem,
+          { opacity: pressed ? 0.5 : 1 },
+        ]}
+      >
+        <Text style={Styles.menutext}>2 Player</Text>
+      </Pressable>
     </View>
   );
 }
@@ -56,5 +77,23 @@ const Styles = StyleSheet.create({
     width: wp(15),
     height: wp(15),
     margin: wp(5),
+  },
+  menuitem: {
+    backgroundColor: "#261447",
+    width: wp(62),
+    height: hp(12),
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: wp(1),
+    borderColor: "#0197F6",
+    borderRadius: wp(5),
+    marginTop: hp(5),
+  },
+
+  menutext: {
+    fontSize: wp(12),
+    fontWeight: "bold",
+    color: "#E84855",
   },
 });
