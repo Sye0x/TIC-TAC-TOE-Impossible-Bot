@@ -30,7 +30,7 @@ const Twoplayer = () => {
               style={styles.box}
               onPress={() => handlePress(rowIndex, colIndex)}
             >
-              <Text>{cell}</Text>
+              <Text style={styles.xo}>{cell}</Text>
             </Pressable>
           ))}
         </View>
@@ -49,9 +49,19 @@ const styles = StyleSheet.create({
     justifyContent: "center", // Centers content vertically
   },
   box: {
-    width: wp(20),
-    height: wp(20),
-    backgroundColor: "white",
-    margin: 2,
+    width: wp(32),
+    height: wp(32),
+    backgroundColor: "#1A1423",
+    borderWidth: wp(1),
+    margin: wp(0.5),
+    borderColor: "#0197F6",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  xo: {
+    color: "#e9190f",
+    fontSize: wp(22),
+    fontWeight: "bold",
   },
 });
