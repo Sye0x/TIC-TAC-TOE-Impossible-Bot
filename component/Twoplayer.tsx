@@ -11,11 +11,31 @@ const Twoplayer = () => {
     ["", "", ""],
     ["", "", ""],
   ]);
-
+  const [turn, setTurn] = useState("x");
   const handlePress = (row: number, col: number) => {
     setGrid((prevGrid) => {
       const newGrid = [...prevGrid];
-      newGrid[row][col] = "X"; // You can toggle text or apply logic here
+      if (turn === "x" && newGrid[row][col] === "") {
+        newGrid[row][col] = "X";
+        setTurn("O");
+      } else if (turn === "O" && newGrid[row][col] === "") {
+        newGrid[row][col] = "O";
+        setTurn("X");
+      }
+      if (newGrid[0][0] === newGrid[0][1]) {
+        if (newGrid[0][1] === newGrid[0][2]) {
+          //x or o won
+        }
+      } else if (newGrid[1][0] === newGrid[1][1]) {
+        if (newGrid[1][1] === newGrid[1][2]) {
+          //x or o won
+        }
+      } else if (newGrid[2][0] === newGrid[2][1]) {
+        if (newGrid[2][1] === newGrid[2][2]) {
+          //x or o won
+        }
+      }
+      // You can toggle text or apply logic here
       return newGrid;
     });
   };
