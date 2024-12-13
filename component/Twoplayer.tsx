@@ -11,11 +11,11 @@ const Twoplayer = () => {
     ["", "", ""],
     ["", "", ""],
   ]);
-  const [turn, setTurn] = useState("x");
+  const [turn, setTurn] = useState("X");
   const handlePress = (row: number, col: number) => {
     setGrid((prevGrid) => {
       const newGrid = [...prevGrid];
-      if (turn === "x" && newGrid[row][col] === "") {
+      if (turn === "X" && newGrid[row][col] === "") {
         newGrid[row][col] = "X";
         setTurn("O");
       } else if (turn === "O" && newGrid[row][col] === "") {
