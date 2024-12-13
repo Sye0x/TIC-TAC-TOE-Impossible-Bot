@@ -12,7 +12,7 @@ import Twoplayer from "../component/Twoplayer";
 
 export default function Index() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Menu">
       {/* Defining the stack navigator to manage the navigation between screens. */}
 
       <Stack.Screen

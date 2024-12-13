@@ -22,18 +22,38 @@ const Twoplayer = () => {
         newGrid[row][col] = "O";
         setTurn("X");
       }
-      if (newGrid[0][0] === newGrid[0][1]) {
-        if (newGrid[0][1] === newGrid[0][2]) {
-          //x or o won
-        }
-      } else if (newGrid[1][0] === newGrid[1][1]) {
-        if (newGrid[1][1] === newGrid[1][2]) {
-          //x or o won
-        }
-      } else if (newGrid[2][0] === newGrid[2][1]) {
-        if (newGrid[2][1] === newGrid[2][2]) {
-          //x or o won
-        }
+      if (newGrid[0][0] === newGrid[0][1] && newGrid[0][1] === newGrid[0][2]) {
+        //x or o won
+      } else if (
+        newGrid[0][0] === newGrid[0][1] &&
+        newGrid[0][1] === newGrid[0][2]
+      ) {
+        //x or o won
+      } else if (
+        newGrid[0][0] === newGrid[0][1] &&
+        newGrid[0][1] === newGrid[0][2]
+      ) {
+        //x or o won
+      } else if (
+        newGrid[0][0] === newGrid[0][1] &&
+        newGrid[0][1] === newGrid[0][2]
+      ) {
+        //x or o won
+      } else if (
+        newGrid[0][0] === newGrid[0][1] &&
+        newGrid[0][1] === newGrid[0][2]
+      ) {
+        //x or o won
+      } else if (
+        newGrid[0][0] === newGrid[0][1] &&
+        newGrid[0][1] === newGrid[0][2]
+      ) {
+        //x or o won
+      } else if (
+        newGrid[0][0] === newGrid[0][1] &&
+        newGrid[0][1] === newGrid[0][2]
+      ) {
+        //x or o won
       }
       // You can toggle text or apply logic here
       return newGrid;
