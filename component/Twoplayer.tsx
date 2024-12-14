@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Pressable, Alert, Image } from "react-native";
+import { Text, View, StyleSheet, Pressable, Image, Modal } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -58,11 +58,6 @@ const Twoplayer = () => {
       const gameWinner = checkWinner(newGrid);
       if (gameWinner) {
         setWinner(gameWinner);
-        if (gameWinner === "Draw") {
-          Alert.alert("Game Over", "It's a Draw!");
-        } else {
-          Alert.alert("Game Over", `${gameWinner} Wins!`);
-        }
       } else {
         setTurn((prevTurn) => (prevTurn === "X" ? "O" : "X"));
       }
@@ -83,29 +78,58 @@ const Twoplayer = () => {
 
   return (
     <View style={styles.bg}>
-      <View>
+      <View style={styles.scoreBoard}>
         <Image
           style={styles.cross}
           source={require("../assets/images/x.png")}
         />
+        <Text style={styles.scoreTxt}>{xScrore}</Text>
+      </View>
+      <View style={styles.scoreBoard}>
+        <Image style={styles.o} source={require("../assets/images/o.png")} />
+        <Text style={styles.scoreTxt}>{oScrore}</Text>
       </View>
       {grid.map((row, rowIndex) => (
         <View key={rowIndex} style={{ flexDirection: "row" }}>
           {row.map((cell, colIndex) => (
             <Pressable
               key={colIndex}
-              style={styles.box}
+              style={({ pressed }) => [
+                styles.box,
+                { opacity: pressed ? 0.5 : 1 },
+              ]}
               onPress={() => handlePress(rowIndex, colIndex)}
             >
-              <Text style={styles.xo}>{cell}</Text>
+              <Text
+                style={[
+                  styles.xo,
+                  { color: cell === "X" ? "#e9190f" : "#08605F" },
+                ]}
+              >
+                {cell}
+              </Text>
             </Pressable>
           ))}
         </View>
       ))}
       {winner && (
-        <Pressable style={styles.resetButton} onPress={resetGame}>
-          <Text style={styles.resetText}>Restart</Text>
-        </Pressable>
+        <Modal
+          transparent={true}
+          animationType="slide"
+          visible={!!winner}
+          onRequestClose={resetGame} // Close the modal on back button press (Android)
+        >
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalText}>
+                {winner === "Draw" ? "It's a Draw!" : `${winner} Wins!`}
+              </Text>
+              <Pressable style={styles.resetButton} onPress={resetGame}>
+                <Text style={styles.resetText}>Play Again</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
       )}
     </View>
   );
@@ -118,7 +142,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#06070E",
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    paddingTop: hp(5),
   },
   box: {
     width: wp(32),
@@ -149,11 +173,49 @@ const styles = StyleSheet.create({
   cross: {
     width: wp(10),
     height: wp(10),
-    margin: wp(5),
   },
   o: {
     width: wp(15),
     height: wp(15),
-    margin: wp(5),
+  },
+  scoreTxt: {
+    color: "#08605F",
+    fontSize: hp(8),
+  },
+  scoreBoard: {
+    backgroundColor: "#37123C",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderWidth: wp(0.6),
+    borderColor: "#0197F6",
+    borderRadius: wp(4),
+    width: wp(90),
+    paddingLeft: wp(4),
+    paddingRight: wp(4),
+    marginBottom: hp(2),
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.7)", // Semi-transparent background
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    width: wp(70), // Set the width of the modal
+    height: hp(30), // Set the height of the modal
+    backgroundColor: "#1A1423",
+    borderRadius: wp(3),
+    justifyContent: "center",
+    alignItems: "center",
+    padding: wp(5),
+    borderWidth: 1,
+    borderColor: "#0197F6",
+  },
+  modalText: {
+    fontSize: wp(5),
+    color: "#FFFFFF",
+    marginBottom: hp(2),
+    textAlign: "center",
   },
 });
