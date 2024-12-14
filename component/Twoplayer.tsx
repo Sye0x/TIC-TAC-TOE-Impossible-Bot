@@ -4,7 +4,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { useNavigation } from "@react-navigation/native";
 const Twoplayer = () => {
   /**
    * This React Native component implements a two-player Tic-Tac-Toe game.
@@ -45,6 +46,8 @@ const Twoplayer = () => {
    * This component provides a complete two-player Tic-Tac-Toe experience with a responsive UI, clear visuals,
    * and proper game logic for detecting winners or a draw.
    */
+  const navigation = useNavigation<any>();
+
   const [grid, setGrid] = useState([
     ["", "", ""],
     ["", "", ""],
@@ -117,6 +120,13 @@ const Twoplayer = () => {
 
   return (
     <View style={styles.bg}>
+      <Pressable
+        style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1, width: wp(90) }]}
+        onPress={() => navigation.navigate("Menu")}
+      >
+        <AntDesign name="back" size={wp(10)} color="#08605F" />
+      </Pressable>
+
       <View style={styles.scoreBoard}>
         <Image
           style={styles.cross}
