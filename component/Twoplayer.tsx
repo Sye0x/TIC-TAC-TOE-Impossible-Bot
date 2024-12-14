@@ -6,6 +6,45 @@ import {
 } from "react-native-responsive-screen";
 
 const Twoplayer = () => {
+  /**
+   * This React Native component implements a two-player Tic-Tac-Toe game.
+   *
+   * 1. State Management:
+   *    - `grid`: Represents the 3x3 game board, initialized with empty strings (`""`).
+   *    - `turn`: Tracks the current player's turn, toggling between "X" and "O".
+   *    - `winner`: Tracks the winner of the game or identifies a draw.
+   *    - `xScrore` and `oScrore`: Keeps track of the scores for player X and player O.
+   *
+   * 2. Game Logic:
+   *    - `checkWinner`: Determines if there's a winner by checking all possible winning combinations
+   *      (horizontal, vertical, and diagonal). If all cells are filled without a winner, it declares a draw.
+   *    - `handlePress`: Updates the grid when a player presses a cell, toggles the turn, and checks for a winner or draw.
+   *      Prevents further action if the game is over or the cell is already filled.
+   *    - `resetGame`: Resets the board and game state to allow a new match.
+   *
+   * 3. Scoreboard:
+   *    - Displays the current scores for players X and O using images as labels.
+   *
+   * 4. Modal for Game Over:
+   *    - Shows a message when the game ends, displaying the winner or indicating a draw.
+   *      Includes a "Play Again" button to reset the game.
+   *
+   * 5. Styling:
+   *    - Uses `StyleSheet` for consistent design.
+   *    - `react-native-responsive-screen` is used for responsive dimensions (`wp` and `hp`).
+   *
+   * 6. Grid Design:
+   *    - Each cell (`Pressable`) is styled to have borders and a dynamic background. The middle row and column
+   *      could be customized for unique colors or styles.
+   *    - The `Text` inside the cells displays either "X" or "O", colored distinctively.
+   *
+   * 7. Accessibility and Feedback:
+   *    - The `opacity` of cells changes on press for visual feedback.
+   *    - The `Modal` is transparent and semi-opaque for focus on the game over message.
+   *
+   * This component provides a complete two-player Tic-Tac-Toe experience with a responsive UI, clear visuals,
+   * and proper game logic for detecting winners or a draw.
+   */
   const [grid, setGrid] = useState([
     ["", "", ""],
     ["", "", ""],
