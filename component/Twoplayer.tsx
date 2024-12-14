@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Pressable, Alert } from "react-native";
+import { Text, View, StyleSheet, Pressable, Alert, Image } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -13,6 +13,8 @@ const Twoplayer = () => {
   ]);
   const [turn, setTurn] = useState("X");
   const [winner, setWinner] = useState<string | null>(null);
+  const [xScrore, setScorex] = useState(0);
+  const [oScrore, setScoreo] = useState(0);
 
   const checkWinner = (grid: string[][]) => {
     const lines = [
@@ -31,6 +33,11 @@ const Twoplayer = () => {
 
     for (const line of lines) {
       if (line[0] !== "" && line[0] === line[1] && line[1] === line[2]) {
+        if (line[0] === "X") {
+          setScorex(xScrore + 1);
+        } else {
+          setScoreo(oScrore + 1);
+        }
         return line[0]; // Return "X" or "O"
       }
     }
@@ -76,6 +83,12 @@ const Twoplayer = () => {
 
   return (
     <View style={styles.bg}>
+      <View>
+        <Image
+          style={styles.cross}
+          source={require("../assets/images/x.png")}
+        />
+      </View>
       {grid.map((row, rowIndex) => (
         <View key={rowIndex} style={{ flexDirection: "row" }}>
           {row.map((cell, colIndex) => (
@@ -132,5 +145,15 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: wp(5),
     fontWeight: "bold",
+  },
+  cross: {
+    width: wp(10),
+    height: wp(10),
+    margin: wp(5),
+  },
+  o: {
+    width: wp(15),
+    height: wp(15),
+    margin: wp(5),
   },
 });
