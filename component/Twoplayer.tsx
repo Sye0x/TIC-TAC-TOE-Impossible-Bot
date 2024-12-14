@@ -121,23 +121,28 @@ const Twoplayer = () => {
   return (
     <View style={styles.bg}>
       <Pressable
-        style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1, width: wp(90) }]}
+        style={({ pressed }) => [
+          { opacity: pressed ? 0.5 : 1, width: wp(90), marginBottom: hp(1) },
+        ]}
         onPress={() => navigation.navigate("Menu")}
       >
-        <AntDesign name="back" size={wp(10)} color="#08605F" />
+        <AntDesign name="back" size={wp(14)} color="#08605F" />
       </Pressable>
+      <View style={{ flexDirection: "row" }}>
+        {" "}
+        <View style={styles.scoreBoard}>
+          <Image
+            style={styles.cross}
+            source={require("../assets/images/x.png")}
+          />
+          <Text style={styles.scoreTxt}>{xScrore}</Text>
+        </View>
+        <View style={styles.scoreBoard}>
+          <Image style={styles.o} source={require("../assets/images/o.png")} />
+          <Text style={styles.scoreTxt}>{oScrore}</Text>
+        </View>
+      </View>
 
-      <View style={styles.scoreBoard}>
-        <Image
-          style={styles.cross}
-          source={require("../assets/images/x.png")}
-        />
-        <Text style={styles.scoreTxt}>{xScrore}</Text>
-      </View>
-      <View style={styles.scoreBoard}>
-        <Image style={styles.o} source={require("../assets/images/o.png")} />
-        <Text style={styles.scoreTxt}>{oScrore}</Text>
-      </View>
       {grid.map((row, rowIndex) => (
         <View key={rowIndex} style={{ flexDirection: "row" }}>
           {row.map((cell, colIndex) => (
@@ -239,10 +244,11 @@ const styles = StyleSheet.create({
     borderWidth: wp(0.6),
     borderColor: "#0197F6",
     borderRadius: wp(4),
-    width: wp(90),
+    width: wp(40),
     paddingLeft: wp(4),
     paddingRight: wp(4),
     marginBottom: hp(2),
+    marginHorizontal: wp(2),
   },
   modalOverlay: {
     flex: 1,
