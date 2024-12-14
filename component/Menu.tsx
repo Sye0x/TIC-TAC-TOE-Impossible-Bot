@@ -6,6 +6,33 @@ import {
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
 const Menu = () => {
+  /**
+   * This React Native component implements the main menu for a Tic-Tac-Toe game.
+   *
+   * 1. Navigation:
+   *    - Utilizes `useNavigation` from React Navigation to navigate between screens.
+   *    - The "2 Player" button navigates to the `Twoplayer` screen.
+   *
+   * 2. Menu Items:
+   *    - "1 Player": Placeholder for a single-player mode (currently without functionality).
+   *    - "2 Player": Navigates to the `Twoplayer` game mode screen.
+   *
+   * 3. Icons and Images:
+   *    - A settings icon (`Ionicons`) at the top-right corner for potential future features.
+   *    - Images of "X" and "O" as visual design elements.
+   *
+   * 4. Styling:
+   *    - A dark-themed background for a visually appealing interface.
+   *    - Buttons (`Pressable`) for menu options with opacity feedback on press.
+   *    - Styled text for the title "Tic Tac Toe" with different colors for each word.
+   *    - Consistent use of responsive design with `widthPercentageToDP` (`wp`) and `heightPercentageToDP` (`hp`) for adaptability across screen sizes.
+   *
+   * 5. Flexbox Layout:
+   *    - Aligns items horizontally and vertically using `alignItems` and `justifyContent`.
+   *    - Positions the settings icon at the top-right, the title in the center, and menu items below.
+   *
+   * This component serves as a visually appealing and functional entry point for navigating the game modes.
+   */
   const navigation = useNavigation<any>();
 
   return (
