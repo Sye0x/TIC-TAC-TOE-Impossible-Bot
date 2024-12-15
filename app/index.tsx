@@ -9,7 +9,7 @@ import Menu from "../component/Menu";
 
 import Twoplayer from "../component/Twoplayer";
 // Importing the Twoplayer component, which will be navigated to from the Menu.
-import PlayerVbot from "../component/PlayerVbot";
+import PlayerVbot from "@/component/PlayerVbot";
 export default function Index() {
   return (
     <Stack.Navigator initialRouteName="Menu">
