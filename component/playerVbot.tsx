@@ -7,6 +7,18 @@ import {
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
+
+// This is a Tic-Tac-Toe game where a player competes against a bot. The game allows the player to choose between "X" or "O" at the beginning.
+// The grid consists of 9 cells arranged in 3x3 rows, where the player and bot take turns to place their respective symbols.
+// The game utilizes a minimax algorithm to determine the optimal move for the bot, and checks after each move if there is a winner or a draw.
+// The state of the game is stored in a 2D array (grid), and the game's progress is tracked using the "turn" (which player is making the move),
+// "winner" (who won the game or if it's a draw), and "xScore" and "oScore" (keeping track of scores for both players). The game also displays
+// a modal for the player to pick their symbol at the start, and a modal at the end to show the result (win or draw). After each game,
+// the user can reset the board to play again. The bot's move is determined by the minimax algorithm, which evaluates all possible moves
+// and chooses the one that maximizes the bot's chances of winning while minimizing the player's chances. The component is modular, with functions
+// like `minmax`, `Botmove`, `checkWinner`, and `handlePress` handling the game logic, AI move decisions, and user interactions. The design
+// includes a simple UI with a responsive grid, score display, and intuitive player vs. bot gameplay.
+
 const PlayerVbot = () => {
   const navigation = useNavigation<any>();
 
