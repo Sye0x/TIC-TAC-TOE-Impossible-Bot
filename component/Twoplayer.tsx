@@ -129,7 +129,6 @@ const Twoplayer = () => {
         <AntDesign name="back" size={wp(14)} color="#08605F" />
       </Pressable>
       <View style={{ flexDirection: "row" }}>
-        {" "}
         <View style={styles.scoreBoard}>
           <Image
             style={styles.cross}

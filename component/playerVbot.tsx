@@ -6,6 +6,7 @@ import {
 } from "react-native-responsive-screen";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
+import { useEffect } from "react";
 const playerVbot = () => {
   const navigation = useNavigation<any>();
 
@@ -14,10 +15,58 @@ const playerVbot = () => {
     ["", "", ""],
     ["", "", ""],
   ]);
+  const [start, setStart] = useState(true);
+  const [player, setPlayer] = useState("");
   const [turn, setTurn] = useState("X");
   const [winner, setWinner] = useState<string | null>(null);
   const [xScrore, setScorex] = useState(0);
   const [oScrore, setScoreo] = useState(0);
+
+  const Botmove = (grid: string[][]) => {
+    let row = -1;
+    let col = -1;
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (grid[i][j] == "" && row == -1 && col == -1) {
+          row = i;
+          col = j;
+          break;
+        }
+        if (row == i) {
+          break;
+        }
+      }
+    }
+    if (grid[row][col] !== "" || winner) return;
+
+    setGrid((prevGrid) => {
+      const newGrid = [...prevGrid.map((row) => [...row])];
+      newGrid[row][col] = turn;
+
+      const gameWinner = checkWinner(newGrid);
+      if (gameWinner) {
+        setWinner(gameWinner);
+      } else {
+        setTurn("O");
+      }
+
+      return newGrid;
+    });
+  };
+  useEffect(() => {
+    if (
+      (turn === "X" && !winner && player === "O") ||
+      (turn === "O" && !winner && player === "X")
+    ) {
+      setTimeout(() => {
+        Botmove(grid);
+      }, 300);
+    }
+  });
+  const setGame = (value: any) => {
+    setStart(false);
+    setPlayer(value);
+  };
 
   const checkWinner = (grid: string[][]) => {
     const lines = [
@@ -52,21 +101,23 @@ const playerVbot = () => {
   };
 
   const handlePress = (row: number, col: number) => {
-    if (grid[row][col] !== "" || winner) return;
+    if (turn === "O") {
+      if (grid[row][col] !== "" || winner) return;
 
-    setGrid((prevGrid) => {
-      const newGrid = [...prevGrid.map((row) => [...row])];
-      newGrid[row][col] = turn;
+      setGrid((prevGrid) => {
+        const newGrid = [...prevGrid.map((row) => [...row])];
+        newGrid[row][col] = turn;
 
-      const gameWinner = checkWinner(newGrid);
-      if (gameWinner) {
-        setWinner(gameWinner);
-      } else {
-        setTurn((prevTurn) => (prevTurn === "X" ? "O" : "X"));
-      }
+        const gameWinner = checkWinner(newGrid);
+        if (gameWinner) {
+          setWinner(gameWinner);
+        } else {
+          setTurn("X");
+        }
 
-      return newGrid;
-    });
+        return newGrid;
+      });
+    }
   };
 
   const resetGame = () => {
@@ -81,6 +132,45 @@ const playerVbot = () => {
 
   return (
     <View style={styles.bg}>
+      {start && (
+        <Modal
+          transparent={true}
+          animationType="slide"
+          visible={!!start}
+          onRequestClose={resetGame} // Close the modal on back button press (Android)
+        >
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalText}>Pick One</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                }}
+              >
+                <Pressable
+                  onPress={() => setGame("O")}
+                  style={{ paddingHorizontal: wp(4) }}
+                >
+                  <Image
+                    style={styles.o}
+                    source={require("../assets/images/o.png")}
+                  />
+                </Pressable>
+                <Pressable
+                  style={{ paddingHorizontal: wp(4) }}
+                  onPress={() => setGame("X")}
+                >
+                  <Image
+                    style={styles.o}
+                    source={require("../assets/images/x.png")}
+                  />
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+      )}
+
       <Pressable
         style={({ pressed }) => [
           { opacity: pressed ? 0.5 : 1, width: wp(90), marginBottom: hp(1) },
@@ -90,7 +180,6 @@ const playerVbot = () => {
         <AntDesign name="back" size={wp(14)} color="#08605F" />
       </Pressable>
       <View style={{ flexDirection: "row" }}>
-        {" "}
         <View style={styles.scoreBoard}>
           <Image
             style={styles.cross}
