@@ -9,7 +9,7 @@ import Menu from "../component/Menu";
 
 import Twoplayer from "../component/Twoplayer";
 // Importing the Twoplayer component, which will be navigated to from the Menu.
-
+import playerVbot from "@/component/playerVbot";
 export default function Index() {
   return (
     <Stack.Navigator initialRouteName="Menu">
@@ -25,6 +25,12 @@ export default function Index() {
       <Stack.Screen
         name="Twoplayer"
         component={Twoplayer}
+        options={{ headerShown: false }}
+        // Adding the Twoplayer screen to the stack and hiding its header.
+      />
+      <Stack.Screen
+        name="playerVbot"
+        component={playerVbot}
         options={{ headerShown: false }}
         // Adding the Twoplayer screen to the stack and hiding its header.
       />
