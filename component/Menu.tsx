@@ -64,7 +64,7 @@ const Menu = () => {
           Styles.menuitem,
           { opacity: pressed ? 0.5 : 1 },
         ]}
-        onPress={() => navigation.navigate("playerVbot")}
+        onPress={() => navigation.navigate("PlayerVbot")}
       >
         <Text style={Styles.menutext}>1 Player</Text>
       </Pressable>

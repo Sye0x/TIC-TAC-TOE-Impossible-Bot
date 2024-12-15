@@ -7,7 +7,7 @@ import {
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
-const playerVbot = () => {
+const PlayerVbot = () => {
   const navigation = useNavigation<any>();
 
   const [grid, setGrid] = useState([
@@ -22,21 +22,130 @@ const playerVbot = () => {
   const [xScrore, setScorex] = useState(0);
   const [oScrore, setScoreo] = useState(0);
 
+  function minmax(grid: string[][], depth: any, maximizing: any) {
+    let result = checkWinner(grid);
+    if (result !== null) {
+      if (result == "Draw") {
+        return 0;
+      } else if (result == turn) {
+        return 1;
+      } else {
+        return -1;
+      }
+    }
+    if (maximizing) {
+      let bestScore = -Infinity;
+
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+          if (grid[i][j] == "") {
+            grid[i][j] = turn;
+            let score = minmax(grid, depth + 1, false);
+            grid[i][j] = "";
+            if (score > bestScore) {
+              bestScore = score;
+            }
+          }
+        }
+      }
+      return bestScore;
+    } else {
+      let bestScore = Infinity;
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+          if (grid[i][j] == "") {
+            grid[i][j] = player;
+            let score = minmax(grid, depth + 1, true);
+            grid[i][j] = "";
+            if (score < bestScore) {
+              bestScore = score;
+            }
+          }
+        }
+      }
+      return bestScore;
+    }
+  }
   const Botmove = (grid: string[][]) => {
     let row = -1;
     let col = -1;
+    let bestScore = -Infinity;
+
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
-        if (grid[i][j] == "" && row == -1 && col == -1) {
-          row = i;
-          col = j;
-          break;
-        }
-        if (row == i) {
-          break;
+        if (grid[i][j] === "") {
+          grid[i][j] = turn;
+          const score = minmax(grid, 0, false);
+          grid[i][j] = "";
+
+          if (score > bestScore) {
+            bestScore = score;
+            row = i;
+            col = j;
+          }
         }
       }
     }
+
+    if (row === -1 || col === -1 || winner) return;
+
+    setGrid((prevGrid) => {
+      const newGrid = [...prevGrid.map((row) => [...row])];
+      newGrid[row][col] = turn;
+
+      const gameWinner = checkWinner(newGrid);
+      if (gameWinner) {
+        setWinner(gameWinner);
+        if (gameWinner === "X") setScorex((prev) => prev + 1);
+        if (gameWinner === "O") setScoreo((prev) => prev + 1);
+      } else {
+        setTurn((prev) => (prev === "X" ? "O" : "X"));
+      }
+
+      return newGrid;
+    });
+  };
+
+  useEffect(() => {
+    if (
+      (turn === "X" && !winner && player === "O") ||
+      (turn === "O" && !winner && player === "X")
+    ) {
+      Botmove(grid);
+    }
+  }, [grid, turn, winner, player]);
+  const setGame = (value: any) => {
+    setStart(false);
+    setPlayer(value);
+  };
+
+  const checkWinner = (grid: string[][]) => {
+    const lines = [
+      // Horizontal, vertical, and diagonal win conditions
+      [grid[0][0], grid[0][1], grid[0][2]],
+      [grid[1][0], grid[1][1], grid[1][2]],
+      [grid[2][0], grid[2][1], grid[2][2]],
+      [grid[0][0], grid[1][0], grid[2][0]],
+      [grid[0][1], grid[1][1], grid[2][1]],
+      [grid[0][2], grid[1][2], grid[2][2]],
+      [grid[0][0], grid[1][1], grid[2][2]],
+      [grid[0][2], grid[1][1], grid[2][0]],
+    ];
+
+    for (const line of lines) {
+      if (line[0] !== "" && line[0] === line[1] && line[1] === line[2]) {
+        return line[0];
+      }
+    }
+
+    if (grid.every((row) => row.every((cell) => cell !== ""))) {
+      return "Draw";
+    }
+
+    return null;
+  };
+
+  const handlePress = (row: number, col: number) => {
     if (grid[row][col] !== "" || winner) return;
 
     setGrid((prevGrid) => {
@@ -47,77 +156,15 @@ const playerVbot = () => {
       if (gameWinner) {
         setWinner(gameWinner);
       } else {
-        setTurn("O");
+        if (turn === "X") {
+          setTurn("O");
+        } else {
+          setTurn("X");
+        }
       }
 
       return newGrid;
     });
-  };
-  useEffect(() => {
-    if (
-      (turn === "X" && !winner && player === "O") ||
-      (turn === "O" && !winner && player === "X")
-    ) {
-      setTimeout(() => {
-        Botmove(grid);
-      }, 300);
-    }
-  });
-  const setGame = (value: any) => {
-    setStart(false);
-    setPlayer(value);
-  };
-
-  const checkWinner = (grid: string[][]) => {
-    const lines = [
-      // Horizontal lines
-      [grid[0][0], grid[0][1], grid[0][2]],
-      [grid[1][0], grid[1][1], grid[1][2]],
-      [grid[2][0], grid[2][1], grid[2][2]],
-      // Vertical lines
-      [grid[0][0], grid[1][0], grid[2][0]],
-      [grid[0][1], grid[1][1], grid[2][1]],
-      [grid[0][2], grid[1][2], grid[2][2]],
-      // Diagonals
-      [grid[0][0], grid[1][1], grid[2][2]],
-      [grid[0][2], grid[1][1], grid[2][0]],
-    ];
-
-    for (const line of lines) {
-      if (line[0] !== "" && line[0] === line[1] && line[1] === line[2]) {
-        if (line[0] === "X") {
-          setScorex(xScrore + 1);
-        } else {
-          setScoreo(oScrore + 1);
-        }
-        return line[0]; // Return "X" or "O"
-      }
-    }
-    // Check for draw
-    if (grid.every((row) => row.every((cell) => cell !== ""))) {
-      return "Draw";
-    }
-    return null;
-  };
-
-  const handlePress = (row: number, col: number) => {
-    if (turn === "O") {
-      if (grid[row][col] !== "" || winner) return;
-
-      setGrid((prevGrid) => {
-        const newGrid = [...prevGrid.map((row) => [...row])];
-        newGrid[row][col] = turn;
-
-        const gameWinner = checkWinner(newGrid);
-        if (gameWinner) {
-          setWinner(gameWinner);
-        } else {
-          setTurn("X");
-        }
-
-        return newGrid;
-      });
-    }
   };
 
   const resetGame = () => {
@@ -239,7 +286,7 @@ const playerVbot = () => {
   );
 };
 
-export default playerVbot;
+export default PlayerVbot;
 
 const styles = StyleSheet.create({
   bg: {
