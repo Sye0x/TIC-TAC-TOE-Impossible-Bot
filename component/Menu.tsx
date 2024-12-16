@@ -8,33 +8,42 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 const Menu = () => {
-  /**
-   * This React Native component implements the main menu for a Tic-Tac-Toe game.
-   *
-   * 1. Navigation:
-   *    - Utilizes `useNavigation` from React Navigation to navigate between screens.
-   *    - The "2 Player" button navigates to the `Twoplayer` screen.
-   *
-   * 2. Menu Items:
-   *    - "1 Player": Placeholder for a single-player mode (currently without functionality).
-   *    - "2 Player": Navigates to the `Twoplayer` game mode screen.
-   *
-   * 3. Icons and Images:
-   *    - A settings icon (`Ionicons`) at the top-right corner for potential future features.
-   *    - Images of "X" and "O" as visual design elements.
-   *
-   * 4. Styling:
-   *    - A dark-themed background for a visually appealing interface.
-   *    - Buttons (`Pressable`) for menu options with opacity feedback on press.
-   *    - Styled text for the title "Tic Tac Toe" with different colors for each word.
-   *    - Consistent use of responsive design with `widthPercentageToDP` (`wp`) and `heightPercentageToDP` (`hp`) for adaptability across screen sizes.
-   *
-   * 5. Flexbox Layout:
-   *    - Aligns items horizontally and vertically using `alignItems` and `justifyContent`.
-   *    - Positions the settings icon at the top-right, the title in the center, and menu items below.
-   *
-   * This component serves as a visually appealing and functional entry point for navigating the game modes.
-   */
+  // Comments:
+  // 1. Overall Structure:
+  //    - The component is structured using functional programming with hooks (`useState`) for state management.
+  //    - Utilizes modular styling with `StyleSheet.create` for readability and reusability.
+  //    - Responsiveness is ensured using `react-native-responsive-screen` for consistent layout on different devices.
+
+  // 2. State Management:
+  //    - Two states are managed using `useState`: `Settings` for modal visibility and `audioOn` for audio toggle functionality.
+
+  // 3. Navigation:
+  //    - `useNavigation` from React Navigation is used to navigate to the "PlayerVbot" and "Twoplayer" screens.
+  //    - Demonstrates clean navigation logic with clear and descriptive screen names.
+
+  // 4. Modal Functionality:
+  //    - The modal is implemented for the settings menu and displays toggleable audio options.
+  //    - State `audioOn` switches between "Audio on" and "Audio off" states, with appropriate icon and text updates.
+
+  // 5. Design & Styling:
+  //    - Dark-themed background enhances visual appeal and consistency with game aesthetics.
+  //    - Responsive design ensures adaptability to various screen sizes with `wp` and `hp` utility functions.
+  //    - Flexbox is effectively used for layout alignment and positioning.
+  //    - Visual elements like images (`X` and `O`) and styled text ("Tic Tac Toe") create a polished UI.
+
+  // 6. Accessibility:
+  //    - `Pressable` components provide visual feedback with opacity changes for an improved user experience.
+  //    - The modal overlay includes a semi-transparent background to keep focus on the modal content.
+
+  // 7. Code Readability:
+  //    - Inline comments and detailed naming conventions make the code easy to understand.
+  //    - The use of modular styling (`Styles`) ensures separation of logic and UI elements for maintainability.
+
+  // 8. Potential Improvements:
+  //    - Implement functionality for the "1 Player" mode (currently a placeholder).
+  //    - Add more settings options or features in the modal for extended functionality.
+  //    - Include audio feedback for button presses to enhance user engagement.
+
   const [Settings, setSetting] = useState(false);
   const [audioOn, setaudio] = useState(false);
   const navigation = useNavigation<any>();
