@@ -1,5 +1,6 @@
 import { Text, View, StyleSheet, Image, Pressable, Modal } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import Feather from "@expo/vector-icons/Feather";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -57,6 +58,44 @@ const Menu = () => {
         <Modal transparent={true} animationType="slide" visible={!!Settings}>
           <View style={Styles.modalOverlay}>
             <View style={Styles.modalContent}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginBottom: hp(2),
+                }}
+              >
+                <Feather name="volume-2" size={wp(12)} color="#E84855" />
+                <Text
+                  style={{
+                    fontSize: wp(7.2),
+                    marginLeft: wp(2),
+                    color: "#0197F6",
+                  }}
+                >
+                  Audio on
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginBottom: hp(2),
+                }}
+              >
+                <Feather name="volume-x" size={wp(13)} color="#E84855" />
+                <Text
+                  style={{
+                    fontSize: wp(7.2),
+                    marginLeft: wp(2),
+                    color: "#0197F6",
+                  }}
+                >
+                  Audio on
+                </Text>
+              </View>
               <Pressable style={Styles.saveButton} onPress={closeSetting}>
                 <Text style={Styles.saveButtonText}>Save</Text>
               </Pressable>
