@@ -36,6 +36,7 @@ const Menu = () => {
    * This component serves as a visually appealing and functional entry point for navigating the game modes.
    */
   const [Settings, setSetting] = useState(false);
+  const [audioOn, setaudio] = useState(false);
   const navigation = useNavigation<any>();
   const openSetting = () => {
     setSetting(true);
@@ -58,44 +59,54 @@ const Menu = () => {
         <Modal transparent={true} animationType="slide" visible={!!Settings}>
           <View style={Styles.modalOverlay}>
             <View style={Styles.modalContent}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginBottom: hp(2),
-                }}
-              >
-                <Feather name="volume-2" size={wp(12)} color="#E84855" />
-                <Text
+              {audioOn && (
+                <Pressable
+                  onPress={() => {
+                    setaudio(false);
+                  }}
                   style={{
-                    fontSize: wp(7.2),
-                    marginLeft: wp(2),
-                    color: "#0197F6",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: hp(2),
                   }}
                 >
-                  Audio on
-                </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginBottom: hp(2),
-                }}
-              >
-                <Feather name="volume-x" size={wp(13)} color="#E84855" />
-                <Text
+                  <Feather name="volume-2" size={wp(12)} color="#E84855" />
+                  <Text
+                    style={{
+                      fontSize: wp(7.2),
+                      marginLeft: wp(2),
+                      color: "#0197F6",
+                    }}
+                  >
+                    Audio on
+                  </Text>
+                </Pressable>
+              )}
+              {!audioOn && (
+                <Pressable
+                  onPress={() => {
+                    setaudio(true);
+                  }}
                   style={{
-                    fontSize: wp(7.2),
-                    marginLeft: wp(2),
-                    color: "#0197F6",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: hp(2),
                   }}
                 >
-                  Audio on
-                </Text>
-              </View>
+                  <Feather name="volume-x" size={wp(13)} color="#E84855" />
+                  <Text
+                    style={{
+                      fontSize: wp(7.2),
+                      marginLeft: wp(2),
+                      color: "#0197F6",
+                    }}
+                  >
+                    Audio off
+                  </Text>
+                </Pressable>
+              )}
               <Pressable style={Styles.saveButton} onPress={closeSetting}>
                 <Text style={Styles.saveButtonText}>Save</Text>
               </Pressable>
