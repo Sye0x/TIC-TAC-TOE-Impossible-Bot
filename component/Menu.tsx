@@ -1,10 +1,11 @@
-import { Text, View, StyleSheet, Image, Pressable } from "react-native";
+import { Text, View, StyleSheet, Image, Pressable, Modal } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 const Menu = () => {
   /**
    * This React Native component implements the main menu for a Tic-Tac-Toe game.
@@ -33,11 +34,18 @@ const Menu = () => {
    *
    * This component serves as a visually appealing and functional entry point for navigating the game modes.
    */
+  const [Settings, setSetting] = useState(false);
   const navigation = useNavigation<any>();
-
+  const openSetting = () => {
+    setSetting(true);
+  };
+  const closeSetting = () => {
+    setSetting(false);
+  };
   return (
     <View style={Styles.bg}>
       <Pressable
+        onPress={openSetting}
         style={({ pressed }) => [
           Styles.setting,
           { opacity: pressed ? 0.5 : 1 },
@@ -45,6 +53,18 @@ const Menu = () => {
       >
         <Ionicons name="settings" size={wp(14)} color="#E84855" />
       </Pressable>
+      {Settings && (
+        <Modal transparent={true} animationType="slide" visible={!!Settings}>
+          <View style={Styles.modalOverlay}>
+            <View style={Styles.modalContent}>
+              <Pressable style={Styles.saveButton} onPress={closeSetting}>
+                <Text style={Styles.saveButtonText}>Save</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+      )}
+
       <View style={{ alignSelf: "flex-start" }}>
         <Image
           style={Styles.cross}
@@ -128,5 +148,35 @@ const Styles = StyleSheet.create({
     fontSize: wp(12),
     fontWeight: "bold",
     color: "#E84855",
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.7)", // Semi-transparent background
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    width: wp(70), // Set the width of the modal
+    height: hp(30), // Set the height of the modal
+    backgroundColor: "#1A1423",
+    borderRadius: wp(3),
+    justifyContent: "center",
+    alignItems: "center",
+    padding: wp(5),
+    borderWidth: 1,
+    borderColor: "#0197F6",
+  },
+  saveButton: {
+    backgroundColor: "#0197F6",
+    borderRadius: wp(2),
+    paddingVertical: hp(1),
+    paddingHorizontal: wp(5),
+    marginTop: hp(2),
+    alignItems: "center",
+  },
+  saveButtonText: {
+    fontSize: wp(4),
+    fontWeight: "bold",
+    color: "#FFFFFF",
   },
 });
