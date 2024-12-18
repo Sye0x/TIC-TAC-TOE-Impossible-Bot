@@ -4,10 +4,16 @@
     "slug": "TicTacToe-Bot",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/tic-tac-toe.png",
+    "icon": "./assets/images/tic-tac-toe-s.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/tic-tac-toe-s.png",
+      "imageWidth": 100,
+      "resizeMode": "contain",
+      "backgroundColor": "#06070E"
+    },
     "ios": {
       "supportsTablet": true
     },
@@ -22,18 +28,7 @@
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
-    "plugins": [
-      "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/tic-tac-toe-s.png",
-          "imageWidth": 100,
-          "resizeMode": "contain",
-          "backgroundColor": "#000000"
-        }
-      ]
-    ],
+
     "experiments": {
       "typedRoutes": true
     }
