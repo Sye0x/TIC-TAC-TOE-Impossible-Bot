@@ -21,16 +21,21 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/tic-tac-toe-s.png",
         "backgroundColor": "#000000"
-      }
+      },
+      "package": "com.syed0x.TicTacToeBot"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
-
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a1b7b9e3-761a-4e7f-80c7-08a2b671e59d"
+      }
     }
   }
 }
