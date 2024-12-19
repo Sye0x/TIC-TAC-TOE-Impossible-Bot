@@ -1,3 +1,5 @@
+// Issue in the program need debugging
+
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 // Importing the function to create a stack navigator for managing navigation.
 
