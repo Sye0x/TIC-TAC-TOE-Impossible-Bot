@@ -1,3 +1,4 @@
+// Issue in the program need debugging
 import { Text, View, StyleSheet, Image, Pressable, Modal } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Feather from "@expo/vector-icons/Feather";
